@@ -148,8 +148,8 @@ func TestReverse(t *testing.T) {
 	}
 	defer teardownTest()
 
-	metadata := ResourceMetadata{
-		Name:      resourceName,
+	metadata := ResourceID{
+		Topic:     resourceName,
 		StartTime: startTime,
 		Frequency: resourceFrequency,
 		Owner:     signer.Address(),
@@ -249,8 +249,8 @@ func TestResourceHandler(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	metadata := &ResourceMetadata{
-		Name:      resourceName,
+	metadata := &ResourceID{
+		Topic:     resourceName,
 		Frequency: resourceFrequency,
 		StartTime: Timestamp{Time: timeProvider.Now().Time},
 		Owner:     signer.Address(),
@@ -276,7 +276,7 @@ func TestResourceHandler(t *testing.T) {
 		t.Fatalf("chunk data must be minimum 16 bytes, is %d", len(chunk.SData))
 	}
 
-	var recoveredMetadata ResourceMetadata
+	var recoveredMetadata ResourceID
 
 	recoveredMetadata.binaryGet(chunk.SData)
 	if err != nil {
@@ -482,8 +482,8 @@ func TestMultihash(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	metadata := &ResourceMetadata{
-		Name:      resourceName,
+	metadata := &ResourceID{
+		Topic:     resourceName,
 		Frequency: resourceFrequency,
 		StartTime: Timestamp{Time: timeProvider.Now().Time},
 		Owner:     signer.Address(),
@@ -676,8 +676,8 @@ func TestValidator(t *testing.T) {
 	// create new resource
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	metadata := &ResourceMetadata{
-		Name:      resourceName,
+	metadata := &ResourceID{
+		Topic:     resourceName,
 		Frequency: resourceFrequency,
 		StartTime: Timestamp{Time: timeProvider.Now().Time},
 		Owner:     signer.Address(),
@@ -730,8 +730,8 @@ func TestValidator(t *testing.T) {
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	metadata = &ResourceMetadata{
-		Name:      resourceName,
+	metadata = &ResourceID{
+		Topic:     resourceName,
 		StartTime: TimestampProvider.Now(),
 		Frequency: resourceFrequency,
 		Owner:     signer.Address(),
@@ -788,9 +788,9 @@ func TestValidatorInStore(t *testing.T) {
 	badChunk := chunks[1]
 	badChunk.SData = goodChunk.SData
 
-	metadata := &ResourceMetadata{
+	metadata := &ResourceID{
 		StartTime: startTime,
-		Name:      "xyzzy",
+		Topic:     "xyzzy",
 		Frequency: resourceFrequency,
 		Owner:     signer.Address(),
 	}
