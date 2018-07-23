@@ -16,25 +16,6 @@
 
 package mru
 
-/*import (
-	"github.com/ethereum/go-ethereum/crypto"
-	"bytes"
-	"context"
-	"crypto/rand"
-	"encoding/binary"
-	"flag"
-	"io/ioutil"
-	"os"
-	"testing"
-	"time"
-
-	"github.com/ethereum/go-ethereum/contracts/ens"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/swarm/multihash"
-	"github.com/ethereum/go-ethereum/swarm/storage"
-)*/
-
 import (
 	"bytes"
 	"context"
