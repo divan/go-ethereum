@@ -31,6 +31,7 @@ import (
 const chunkSize = 4096 // temporary until we implement FileStore in the resourcehandler
 const defaultStoreTimeout = 4000 * time.Millisecond
 
+//Handler manages interaction with the chunk store and caches updates
 type Handler struct {
 	chunkStore      *storage.NetStore
 	HashSize        int
