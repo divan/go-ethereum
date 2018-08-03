@@ -16,9 +16,9 @@
 
 package mru
 
-// resourceUpdate encapsulates the information sent as part of a resource update
-type resourceUpdate struct {
-	updateHeader        // metainformationa about this resource update
+// ResourceUpdate encapsulates the information sent as part of a resource update
+type ResourceUpdate struct {
+	UpdateHeader        // metainformationa about this resource update
 	data         []byte // actual data payload
 }
 
@@ -31,7 +31,7 @@ const minimumUpdateDataLength = updateHeaderLength + 1
 const maxUpdateDataLength = chunkSize - signatureLength - updateHeaderLength
 
 // binaryPut serializes the resource update information into the given slice
-func (r *resourceUpdate) binaryPut(serializedData []byte) error {
+func (r *ResourceUpdate) binaryPut(serializedData []byte) error {
 	datalength := len(r.data)
 	if datalength == 0 {
 		return NewError(ErrInvalidValue, "cannot update a resource with no data")
@@ -47,7 +47,7 @@ func (r *resourceUpdate) binaryPut(serializedData []byte) error {
 
 	var cursor int
 	// serialize header (see updateHeader)
-	if err := r.updateHeader.binaryPut(serializedData[cursor : cursor+updateHeaderLength]); err != nil {
+	if err := r.UpdateHeader.binaryPut(serializedData[cursor : cursor+updateHeaderLength]); err != nil {
 		return err
 	}
 	cursor += updateHeaderLength
@@ -60,19 +60,19 @@ func (r *resourceUpdate) binaryPut(serializedData []byte) error {
 }
 
 // binaryLength returns the expected number of bytes this structure will take to encode
-func (r *resourceUpdate) binaryLength() int {
+func (r *ResourceUpdate) binaryLength() int {
 	return updateHeaderLength + len(r.data)
 }
 
 // binaryGet populates this instance from the information contained in the passed byte slice
-func (r *resourceUpdate) binaryGet(serializedData []byte) error {
+func (r *ResourceUpdate) binaryGet(serializedData []byte) error {
 	if len(serializedData) < minimumUpdateDataLength {
 		return NewErrorf(ErrNothingToReturn, "chunk less than %d bytes cannot be a resource update chunk", minimumUpdateDataLength)
 	}
 	dataLength := len(serializedData) - updateHeaderLength
 	var cursor int
 	// at this point we can be satisfied that we have the correct data length to read
-	if err := r.updateHeader.binaryGet(serializedData[cursor : cursor+updateHeaderLength]); err != nil {
+	if err := r.UpdateHeader.binaryGet(serializedData[cursor : cursor+updateHeaderLength]); err != nil {
 		return err
 	}
 	cursor += updateHeaderLength
@@ -88,12 +88,12 @@ func (r *resourceUpdate) binaryGet(serializedData []byte) error {
 
 }
 
-func (r *resourceUpdate) FromValues(values Values, data []byte, parseView bool) error {
+func (r *ResourceUpdate) FromValues(values Values, data []byte, parseView bool) error {
 	r.data = data
-	return r.updateHeader.FromValues(values, parseView)
+	return r.UpdateHeader.FromValues(values, parseView)
 }
 
-func (r *resourceUpdate) ToValues(values Values) []byte {
-	r.updateHeader.ToValues(values)
+func (r *ResourceUpdate) ToValues(values Values) []byte {
+	r.UpdateHeader.ToValues(values)
 	return r.data
 }
