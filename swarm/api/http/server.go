@@ -510,7 +510,7 @@ func (s *Server) HandlePostResource(w http.ResponseWriter, r *http.Request) {
 			RespondError(w, r, err.Error(), http.StatusForbidden)
 			return
 		}
-		_, err = s.api.ResourceUpdate(r.Context(), &updateRequest.SignedResourceUpdate)
+		_, err = s.api.ResourceUpdate(r.Context(), &updateRequest)
 		if err != nil {
 			RespondError(w, r, err.Error(), http.StatusInternalServerError)
 			return
