@@ -342,8 +342,7 @@ func (a *API) Get(ctx context.Context, decrypt DecryptFunc, manifestAddr storage
 	if err != nil {
 		apiGetNotFound.Inc(1)
 		status = http.StatusNotFound
-		log.Warn(fmt.Sprintf("loadManifestTrie error: %v", err))
-		return
+		return nil, "", http.StatusNotFound, nil, err
 	}
 
 	log.Debug("trie getting entry", "key", manifestAddr, "path", path)
